@@ -59,24 +59,19 @@ public class Main {
     static Client buildClient(String email) {
         Client client = new Client();
         client.email = email;
-
-        System.out.print("First name: ");
-        String firstName = SCANNER.nextLine();
-        while (!isNameValid(firstName)) {
-            System.out.println("The first name is not valid! Please provide the valid name (only latin letters and hyphen are allowed, the name should be at least 3 letters long): ");
-            firstName = SCANNER.nextLine();
-        }
-        client.firstName = firstName;
-
-        System.out.print("Last name: ");
-        String lastName = SCANNER.nextLine();
-        while (!isNameValid(lastName)) {
-            System.out.println("The last name is not valid! Please provide the valid name (only latin letters and hyphen are allowed, the name should be at least 3 letters long): ");
-            lastName = SCANNER.nextLine();
-        }
-        client.lastName = lastName;
-
+        client.firstName = checkInputName("First name");
+        client.lastName = checkInputName("Last name");;
         return client;
+    }
+
+    static String checkInputName(String inputPrompt) {
+        System.out.print(inputPrompt + ": ");
+        String name = SCANNER.nextLine();
+        while (!isNameValid(name)) {
+            System.out.println("The " + inputPrompt +" is not valid! Please provide the valid name (only latin letters and hyphen are allowed, the name should be at least 3 letters long): ");
+            name = SCANNER.nextLine();
+        }
+        return name;
     }
 
     static boolean isNameValid(String name) {
