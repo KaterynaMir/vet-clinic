@@ -2,6 +2,7 @@ package main.java.com.magicvet.service;
 
 import main.java.com.magicvet.Main;
 import main.java.com.magicvet.model.Client;
+import main.java.com.magicvet.model.Pet;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +30,20 @@ public class ClientService {
         return client;
     }
 
+    public void addPet(Client client, PetService petService) {
+        System.out.print("Do you want to add a new pet now? (y/n): ");
+        String answerAddPet = Main.SCANNER.nextLine();
+        if (answerAddPet.toLowerCase().trim().startsWith("y")) {
+            System.out.println("Adding a new pet.");
+            Pet pet = petService.registerNewPet();
+            client.setPet(pet);
+            pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
+            System.out.println("Pet has been added.");
+        } else {
+            System.out.println("Have a nice day!");
+        }
+    }
+
     private static Client buildClient(String email) {
         Client client = new Client();
         client.setEmail(email);
@@ -42,6 +57,7 @@ public class ClientService {
         String name = Main.SCANNER.nextLine();
         while (!isNameValid(name)) {
             System.out.println("The " + inputPrompt +" is not valid! Please provide the valid name (only latin letters and hyphen are allowed, the name should be at least 3 letters long): ");
+            System.out.print(inputPrompt + ": ");
             name = Main.SCANNER.nextLine();
         }
         return name;
