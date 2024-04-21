@@ -33,14 +33,22 @@ public class ClientService {
     public void addPet(Client client, PetService petService) {
         System.out.print("Do you want to add a new pet now? (y/n): ");
         String answerAddPet = Main.SCANNER.nextLine();
-        if (answerAddPet.toLowerCase().trim().startsWith("y")) {
-            System.out.println("Adding a new pet.");
-            Pet pet = petService.registerNewPet();
-            client.setPet(pet);
-            pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
-            System.out.println("Pet has been added.");
-        } else {
-            System.out.println("Have a nice day!");
+        while (true){
+            if (answerAddPet.toLowerCase().trim().equals("y")) {
+                System.out.println("Adding a new pet.");
+                Pet pet = petService.registerNewPet();
+                client.setPet(pet);
+                pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
+                System.out.println("Pet has been added.");
+                break;
+            } else if (answerAddPet.toLowerCase().trim().equals("n")){
+                System.out.println("You can register your pet later. Have a nice day!");
+                break;
+            } else {
+                System.out.print("The answer " + answerAddPet +" is not valid! " +
+                        "Please, enter y for 'yes' or n for 'no': ");
+                answerAddPet = Main.SCANNER.nextLine();
+            }
         }
     }
 
