@@ -31,6 +31,7 @@ public class PetService {
 
     private Dog petToDog(Pet pet) {
         Dog dog = new Dog();
+        dog.setType(pet.getType());
         dog.setAge(pet.getAge());
         dog.setName(pet.getName());
         dog.setSex(pet.getSex());
