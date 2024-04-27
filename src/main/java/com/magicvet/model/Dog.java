@@ -7,12 +7,12 @@ public class Dog extends Pet{
 
     public String toString(){
         return "Dog {"
-               // + "type = " + this.getType() + ", "
-                + "name = " + this.getName()
-                + ", sex = " + this.getSex()
-                + ", age = " + this.getAge()
+                + "type = " + getType()
+                + ", name = " + getName()
+                + ", sex = " + getSex()
+                + ", age = " + getAge()
                 + ", size = " + size
-                + ", ownerName = " + this.getOwnerName()
+                + ", ownerName = " + getOwnerName()
                 + "}";
     }
 
