@@ -37,9 +37,11 @@ public class ClientService {
             if (answerAddPet.toLowerCase().trim().equals("y")) {
                 System.out.println("Adding a new pet.");
                 Pet pet = petService.registerNewPet();
-                client.setPet(pet);
-                pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
-                System.out.println("Pet has been added.");
+                if (pet != null){
+                    client.setPet(pet);
+                    pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
+                    System.out.println("Pet has been added.");
+                }
                 break;
             } else if (answerAddPet.toLowerCase().trim().equals("n")){
                 System.out.println("You can register your pet later. Have a nice day!");
