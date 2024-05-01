@@ -6,7 +6,7 @@ public class Dog extends Pet{
     private String size;
 
     public String toString(){
-        return "Dog {"
+        return "Pet {"
                 + "type = " + getType()
                 + ", name = " + getName()
                 + ", sex = " + getSex()
