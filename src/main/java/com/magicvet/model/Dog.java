@@ -17,6 +17,14 @@ public class Dog extends Pet{
         this.size = size;
     }
 
+    public Dog(String name, String sex, String age, String size){
+        setType("dog");
+        setName(name);
+        setSex(sex);
+        setAge(age);
+        setSize(size);
+    }
+
     public String toString(){
         return "Pet {"
                 + "type = " + getType()
