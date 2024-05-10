@@ -15,8 +15,9 @@ public class PetService {
                                                 "\\d+\\s*(m|month|months)$|" +
                                                 "\\d+\\s*(y|year|years)\\s*(and)*\\s*\\d+\\s*(m|month|months)$)";
 
-    private static final String SEX_PATTERN = "^(male|female)$";
+    private static final String SEX_PATTERN = "^(male|female|m|f)$";
     private static final String SIZE_PATTERN = "^(XS|S|M|L|XL)$";
+    private static final String HEALTH_PATTERN = "^(CRITICAL|SERIOUS|MODERATE|HEALTHY|C|S|M|H)$";
 
     public Pet registerNewPet() {
         Pet pet = null;
@@ -43,7 +44,7 @@ public class PetService {
         pet.setName(Main.SCANNER.nextLine().trim());
 
         System.out.print("Sex (male / female): ");
-        pet.setSex(validateInputForPattern(Main.SCANNER.nextLine(),SEX_PATTERN,"male or female"));
+        pet.setSex(validateInputForPattern(Main.SCANNER.nextLine(),SEX_PATTERN,"male or m / female or f"));
 
         if (type.equals(DOG_TYPE)){
             System.out.print("Size (XS / S / M / L / XL): ");
@@ -51,6 +52,15 @@ public class PetService {
             ((Dog) pet).setSize(Dog.Size.valueOf(size));
         }
 
+        System.out.print("What is your view of your pet's health status (CRITICAL(C) / SERIOUS(S) / MODERATE(M) / HEALTHY(H)): ");
+        String healthStatus = validateInputForPattern(Main.SCANNER.nextLine(),HEALTH_PATTERN,"CRITICAL or C /" +
+                " SERIOUS or S / MODERATE or M / HEALTHY or H");
+        switch (healthStatus) {
+            case "CRITICAL","C" -> pet.setHealthState(Pet.HealthStatus.CRITICAL);
+            case "SERIOUS","S" -> pet.setHealthState(Pet.HealthStatus.SERIOUS);
+            case "MODERATE","M" -> pet.setHealthState(Pet.HealthStatus.MODERATE);
+            case "HEALTHY","H" -> pet.setHealthState(Pet.HealthStatus.HEALTHY);
+        }
         return pet;
     }
 

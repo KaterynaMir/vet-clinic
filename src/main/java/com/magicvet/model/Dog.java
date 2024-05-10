@@ -12,12 +12,13 @@ public class Dog extends Pet{
         this.size = size;
     }
 
-    public Dog(String name, String sex, String age, Size size){
+    public Dog(String name, String sex, String age, Size size, HealthStatus healthState){
         setType("dog");
         setName(name);
         setSex(sex);
         setAge(age);
         setSize(size);
+        setHealthState(healthState);
     }
 
     public String toString(){
@@ -27,6 +28,7 @@ public class Dog extends Pet{
                 + ", sex = " + getSex()
                 + ", age = " + getAge()
                 + ", size = " + size
+                + ", healthState = " + getHealthState()
                 + ", ownerName = " + getOwnerName()
                 + "}";
     }
