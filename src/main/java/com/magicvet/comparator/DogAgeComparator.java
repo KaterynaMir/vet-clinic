@@ -1,6 +1,5 @@
 package main.java.com.magicvet.comparator;
 
-import main.java.com.magicvet.Main;
 import main.java.com.magicvet.model.Dog;
 
 import java.util.Comparator;
