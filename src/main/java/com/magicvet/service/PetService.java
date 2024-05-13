@@ -14,8 +14,8 @@ public class PetService {
                                                 "\\d+\\s*(y|year|years)\\s*(and)*\\s*\\d+\\s*(m|month|months)$)";
     private static final String PET_NAME_PATTERN = "[\\s\\S]*\\S[\\s\\S]*";
     private static final String SEX_PATTERN = "^(male|female|m|f)$";
-    private static final String SIZE_PATTERN = "^(XS|S|M|L|XL)$";
-    private static final String HEALTH_PATTERN = "^(CRITICAL|SERIOUS|MODERATE|HEALTHY|C|S|M|H)$";
+    private static final String SIZE_PATTERN = "^(xs|s|m|l|xl)$";
+    private static final String HEALTH_PATTERN = "^(critical|serious|moderate|healthy|c|s|m|h)$";
 
     public Pet registerNewPet() {
         Pet pet = null;
@@ -47,14 +47,14 @@ public class PetService {
             System.out.print("Size (XS / S / M / L / XL): ");
             String size = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),SIZE_PATTERN,
                     "XS / S / M / L / XL");
-            ((Dog) pet).setSize(Dog.Size.valueOf(size));
+            ((Dog) pet).setSize(Dog.Size.valueOf(size.toUpperCase()));
         }
 
         System.out.print("What is your view of your pet's health status " +
                 "(CRITICAL(C) / SERIOUS(S) / MODERATE(M) / HEALTHY(H)): ");
         String healthStatus = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),HEALTH_PATTERN,
                 "CRITICAL or C / SERIOUS or S / MODERATE or M / HEALTHY or H");
-        switch (healthStatus) {
+        switch (healthStatus.toUpperCase()) {
             case "CRITICAL","C" -> pet.setHealthState(Pet.HealthStatus.CRITICAL);
             case "SERIOUS","S" -> pet.setHealthState(Pet.HealthStatus.SERIOUS);
             case "MODERATE","M" -> pet.setHealthState(Pet.HealthStatus.MODERATE);

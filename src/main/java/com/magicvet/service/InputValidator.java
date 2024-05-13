@@ -7,26 +7,15 @@ import java.util.regex.Pattern;
 
 public class InputValidator {
     public static String validateInputForPattern(String input, String patternString, String validInput) {
+        input = input.trim().toLowerCase();
         Pattern pattern = Pattern.compile(patternString);
-        Matcher matcher = pattern.matcher(prepareInputForMatch(input,patternString));
+        Matcher matcher = pattern.matcher(input);
         while (!matcher.matches()){
             System.out.println("The input '" + input + "' is not valid! Valid input is: " + validInput);
             System.out.print("Please try again: ");
-            input = Main.SCANNER.nextLine();
-            matcher = pattern.matcher(prepareInputForMatch(input,patternString));
+            input = Main.SCANNER.nextLine().trim().toLowerCase();
+            matcher = pattern.matcher(input);
         }
-        return prepareInputForMatch(input,patternString);
-    }
-
-    private static String prepareInputForMatch (String input, String patternString) {
-        String patternStringWithoutRegexMetaChar = patternString.replaceAll(
-                "\\\\(d|D|s|S|t|n|w|W|b|B|Q|E|A|Z|z|G)","");
-        if (patternStringWithoutRegexMetaChar.equals(patternStringWithoutRegexMetaChar.toLowerCase())) {
-            return input.trim().toLowerCase();
-        } else if (patternStringWithoutRegexMetaChar.equals(patternStringWithoutRegexMetaChar.toUpperCase())){
-            return input.trim().toUpperCase();
-        } else {
-            return input.trim();
-        }
+        return input;
     }
 }
