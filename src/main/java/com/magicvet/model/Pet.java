@@ -53,7 +53,7 @@ public abstract class Pet {
     }
 
     public void setSex(String sex) {
-        this.sex = sex;
+        this.sex = ((sex.equals("m") || sex.equals("male")) ? "male" : "female");
     }
 
     public String getAge() {

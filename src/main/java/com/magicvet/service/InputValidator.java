@@ -6,15 +6,28 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class InputValidator {
-    public static String validateInputForPattern(String input, String patternString, String validInput) {
-        input = input.trim().toLowerCase();
+    public static String validateInputForPattern(String userInput, String patternString, String validInput, Register register) {
+        String input = checkRegister(userInput, register);
         Pattern pattern = Pattern.compile(patternString);
         Matcher matcher = pattern.matcher(input);
         while (!matcher.matches()){
-            System.out.println("The input '" + input + "' is not valid! Valid input is: " + validInput);
+            System.out.println("The input '" + userInput + "' is not valid! Valid input is: " + validInput);
             System.out.print("Please try again: ");
-            input = Main.SCANNER.nextLine().trim().toLowerCase();
+            userInput = Main.SCANNER.nextLine();
+            input = checkRegister(userInput, register);
             matcher = pattern.matcher(input);
+        }
+        return input;
+    }
+
+    public enum Register {
+        LOWER, UPPER, IGNORE
+    }
+    private static String checkRegister(String input, Register register) {
+        switch (register) {
+            case LOWER -> input = input.trim().toLowerCase();
+            case UPPER -> input = input.trim().toUpperCase();
+            case IGNORE -> input = input.trim();
         }
         return input;
     }

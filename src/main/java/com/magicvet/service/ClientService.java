@@ -22,7 +22,7 @@ public class ClientService {
     public void addPet(Client client, PetService petService) {
         System.out.print("Do you want to add a new pet now? (y/n): ");
         String answerAddPet = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),"(y|n)",
-                "y for 'yes' or n for 'no'");
+                "y for 'yes' or n for 'no'", InputValidator.Register.LOWER);
         if (answerAddPet.equals("y")) {
                 System.out.println("Adding a new pet.");
                 Pet pet = petService.registerNewPet();
@@ -38,13 +38,13 @@ public class ClientService {
         Client client = new Client();
         System.out.print("Email: ");
         client.setEmail(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), EMAIL_PATTERN,
-                "example@email.com"));
+                "example@email.com", InputValidator.Register.IGNORE));
         System.out.print("First name: ");
         client.setFirstName(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), NAME_PATTERN,
-                "at least 3 latin letters and/or hyphen"));
+                "at least 3 latin letters and/or hyphen", InputValidator.Register.IGNORE));
         System.out.print("Last name: ");
         client.setLastName(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), NAME_PATTERN,
-                "at least 3 latin letters and/or hyphen"));
+                "at least 3 latin letters and/or hyphen", InputValidator.Register.IGNORE));
         return client;
     }
 }
