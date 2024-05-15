@@ -9,6 +9,7 @@ public abstract class Pet {
     private String age;
     private String name;
     private String ownerName;
+    private HealthStatus healthState;
 
     public String toString(){
         return "Pet {"
@@ -16,6 +17,7 @@ public abstract class Pet {
                 + ", name = " + name
                 + ", sex = " + sex
                 + ", age = " + age
+                + ", healthState = " + healthState
                 + ", ownerName = " + ownerName
                 + "}";
     }
@@ -29,12 +31,13 @@ public abstract class Pet {
                 && Objects.equals(sex, pet.sex)
                 && Objects.equals(age, pet.age)
                 && Objects.equals(name, pet.name)
-                && Objects.equals(ownerName, pet.ownerName);
+                && Objects.equals(ownerName, pet.ownerName)
+                && Objects.equals(healthState, pet.healthState);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, sex, age, name, ownerName);
+        return Objects.hash(type, sex, age, name, ownerName, healthState);
     }
 
     public String getType() {
@@ -75,6 +78,29 @@ public abstract class Pet {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    public HealthStatus getHealthState() { return healthState; }
+
+    public void setHealthState(HealthStatus healthState) { this.healthState = healthState; }
+
+
+    public enum HealthStatus{
+        HEALTHY (4), // the pet is healthy and ready for vaccination/sterilization
+        MODERATE (3), // there are some health issues which could be treated at home
+                                 // with ambulatory visits to the clinic
+        SERIOUS (2),  // the hospitalization is needed
+        CRITICAL (1); // reanimation procedures are needed
+
+        private final int healthValue;
+
+        HealthStatus(int healthValue) {
+            this.healthValue = healthValue;
+        }
+
+        public int getHealthValue() {
+            return healthValue;
+        }
     }
 
 }
