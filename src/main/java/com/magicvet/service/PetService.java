@@ -14,15 +14,15 @@ public class PetService {
                                                 "\\d+\\s*(y|year|years)\\s*(and)*\\s*\\d+\\s*(m|month|months)$)";
     private static final String PET_NAME_PATTERN = "[\\s\\S]*\\S[\\s\\S]*";
     private static final String SEX_PATTERN = "^(male|female|m|f)$";
-    private static final String SIZE_PATTERN = "^(xs|s|m|l|xl)$";
-    private static final String HEALTH_PATTERN = "^(critical|serious|moderate|healthy|c|s|m|h)$";
+    private static final String SIZE_PATTERN = "^(XS|S|M|L|XL)$";
+    private static final String HEALTH_PATTERN = "^(CRITICAL|SERIOUS|MODERATE|HEALTHY|C|S|M|H)$";
 
     public Pet registerNewPet() {
         Pet pet = null;
         System.out.print("Type (dog / cat): ");
 
         String type = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),"(dog|cat)",
-                "dog or cat");
+                "dog or cat", InputValidator.Register.LOWER);
         pet = buildPet(type);
         return pet;
     }
@@ -33,27 +33,27 @@ public class PetService {
 
         System.out.print("Age: (For ex: 5 years / 3 months/ 2 years and 1 month) ");
         pet.setAge(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),AGE_PATTERN,
-                " 5 years / 3 months/ 2 years and 1 month"));
+                " 5 years / 3 months/ 2 years and 1 month", InputValidator.Register.LOWER));
 
         System.out.print("Name: ");
         pet.setName(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),PET_NAME_PATTERN,
-                "at least one non whitespace character"));
+                "at least one non whitespace character", InputValidator.Register.IGNORE));
 
         System.out.print("Sex (male / female): ");
         pet.setSex(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),SEX_PATTERN,
-                "male or m / female or f"));
+                "male or m / female or f", InputValidator.Register.LOWER));
 
         if (type.equals(DOG_TYPE)){
             System.out.print("Size (XS / S / M / L / XL): ");
             String size = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),SIZE_PATTERN,
-                    "XS / S / M / L / XL");
+                    "XS / S / M / L / XL", InputValidator.Register.UPPER);
             ((Dog) pet).setSize(Dog.Size.valueOf(size.toUpperCase()));
         }
 
         System.out.print("What is your view of your pet's health status " +
                 "(CRITICAL(C) / SERIOUS(S) / MODERATE(M) / HEALTHY(H)): ");
         String healthStatus = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),HEALTH_PATTERN,
-                "CRITICAL or C / SERIOUS or S / MODERATE or M / HEALTHY or H");
+                "CRITICAL or C / SERIOUS or S / MODERATE or M / HEALTHY or H", InputValidator.Register.UPPER);
         switch (healthStatus.toUpperCase()) {
             case "CRITICAL","C" -> pet.setHealthState(Pet.HealthStatus.CRITICAL);
             case "SERIOUS","S" -> pet.setHealthState(Pet.HealthStatus.SERIOUS);
