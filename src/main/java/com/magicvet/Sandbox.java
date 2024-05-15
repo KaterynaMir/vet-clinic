@@ -1,6 +1,7 @@
 package main.java.com.magicvet;
 
 import main.java.com.magicvet.comparator.DogAgeComparator;
+import main.java.com.magicvet.model.Cat;
 import main.java.com.magicvet.model.Dog;
 import main.java.com.magicvet.model.Pet;
 
@@ -60,5 +61,7 @@ public class Sandbox {
         for (Dog dog : dogs){
             System.out.println(dog.getHealthState());
         }
+
+        System.out.println(new Dog("Hugo","male","5 years", Dog.Size.M, Pet.HealthStatus.HEALTHY));
     }
 }
