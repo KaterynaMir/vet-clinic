@@ -15,7 +15,8 @@ public class ClientService {
         System.out.println("Please provide clients details.");
         client = buildClient();
         System.out.println("New client: " + client.getFirstName() + " "
-                    + client.getLastName() + " (" + client.getEmail() + ")");
+                    + client.getLastName() + " (" + client.getEmail() +
+                    ") registered on " + client.getClientRegistrationDate());
         return client;
     }
 

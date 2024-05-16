@@ -63,5 +63,6 @@ public class Sandbox {
         }
 
         System.out.println(new Dog("Hugo","male","5 years", Dog.Size.M, Pet.HealthStatus.HEALTHY));
+        System.out.println(new Cat());
     }
 }
