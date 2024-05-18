@@ -30,6 +30,7 @@ public class Dog extends Pet{
                 + ", size = " + size
                 + ", healthState = " + getHealthState()
                 + ", ownerName = " + getOwnerName()
+                + ", registrationDate = " + getRegistrationDate()
                 + "}";
     }
 
