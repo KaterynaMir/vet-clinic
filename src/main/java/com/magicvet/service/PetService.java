@@ -5,13 +5,15 @@ import main.java.com.magicvet.model.Cat;
 import main.java.com.magicvet.model.Dog;
 import main.java.com.magicvet.model.Pet;
 
+import java.time.LocalDate;
+
+import static main.java.com.magicvet.model.Pet.FORMATTER_BIRTH_DATE;
+
 
 public class PetService {
     private static final String DOG_TYPE = "dog";
     private static final String CAT_TYPE = "cat";
-    private static final String AGE_PATTERN = "^(\\d+\\s*(y|year|years)$|" +
-                                                "\\d+\\s*(m|month|months)$|" +
-                                                "\\d+\\s*(y|year|years)\\s*(and)*\\s*\\d+\\s*(m|month|months)$)";
+    private static final String BIRTH_DATE_PATTERN = "^(0[1-9]|1[0-9]|2[0-9]|3[0-1])\\.(0[1-9]|1[0-2])\\.(\\d){4}$";
     private static final String PET_NAME_PATTERN = "[\\s\\S]*\\S[\\s\\S]*";
     private static final String SEX_PATTERN = "^(male|female|m|f)$";
     private static final String SIZE_PATTERN = "^(XS|S|M|L|XL)$";
@@ -29,11 +31,18 @@ public class PetService {
 
     private Pet buildPet(String type) {
         Pet pet = type.equals(CAT_TYPE) ? new Cat() : new Dog();
-        pet.setType(type);
 
-        System.out.print("Age: (For ex: 5 years / 3 months/ 2 years and 1 month) ");
-        pet.setAge(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),AGE_PATTERN,
-                " 5 years / 3 months/ 2 years and 1 month", InputValidator.Register.LOWER));
+        System.out.print("Birth date in format dd/MM/yyyy:  ");
+        String birthDateString = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),BIRTH_DATE_PATTERN,
+                "dd/MM/yyyy", InputValidator.Register.IGNORE);
+        LocalDate birthDate = LocalDate.parse(birthDateString,FORMATTER_BIRTH_DATE);
+        while (birthDate.isAfter(LocalDate.now())) {
+            System.out.print("You entered future date! Please, enter correct birth date for your pet: ");
+            birthDateString = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),BIRTH_DATE_PATTERN,
+                    "dd/MM/yyyy (dd = 01-31, MM = 01-12)", InputValidator.Register.IGNORE);
+            birthDate = LocalDate.parse(birthDateString,FORMATTER_BIRTH_DATE);
+        }
+        pet.setBirthDate(birthDate);
 
         System.out.print("Name: ");
         pet.setName(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),PET_NAME_PATTERN,

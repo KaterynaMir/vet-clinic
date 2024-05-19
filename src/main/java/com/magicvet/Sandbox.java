@@ -1,6 +1,5 @@
 package main.java.com.magicvet;
 
-import main.java.com.magicvet.comparator.DogAgeComparator;
 import main.java.com.magicvet.model.Cat;
 import main.java.com.magicvet.model.Dog;
 import main.java.com.magicvet.model.Pet;
@@ -12,14 +11,14 @@ public class Sandbox {
     public static void main(String[] args) {
 
         Dog[] dogs = {
-                new Dog("Olly", "male" , "5 years",Dog.Size.L, Pet.HealthStatus.MODERATE),
-                new Dog("Ben", "male" , "2 years 4 months",Dog.Size.XS, Pet.HealthStatus.HEALTHY),
-                new Dog("Rex", "male" , "11 years 6 months",Dog.Size.M, Pet.HealthStatus.SERIOUS),
-                new Dog("Mimi", "female" , "6 years 1 month",Dog.Size.S, Pet.HealthStatus.HEALTHY),
-                new Dog("Bobby", "male" , "2 months",Dog.Size.L, Pet.HealthStatus.CRITICAL),
-                new Dog("Linda", "female" , "3 years",Dog.Size.XS, Pet.HealthStatus.MODERATE),
-                new Dog("Alf", "male" , "4 years 7 months",Dog.Size.XL, Pet.HealthStatus.SERIOUS),
-                new Dog("Astra", "female" , "11 months",Dog.Size.M, Pet.HealthStatus.HEALTHY),
+                new Dog("Olly", "male" , "15.05.2019",Dog.Size.L, Pet.HealthStatus.MODERATE),
+                new Dog("Ben", "male" , "01.01.2022",Dog.Size.XS, Pet.HealthStatus.HEALTHY),
+                new Dog("Rex", "male" , "17.11.2012",Dog.Size.M, Pet.HealthStatus.SERIOUS),
+                new Dog("Mimi", "female" , "03.04.2018",Dog.Size.S, Pet.HealthStatus.HEALTHY),
+                new Dog("Bobby", "male" , "08.03.2024",Dog.Size.L, Pet.HealthStatus.CRITICAL),
+                new Dog("Linda", "female" , "13.05.2021",Dog.Size.XS, Pet.HealthStatus.MODERATE),
+                new Dog("Alf", "male" , "16.10.2019",Dog.Size.XL, Pet.HealthStatus.SERIOUS),
+                new Dog("Astra", "female" , "04.06.2023",Dog.Size.M, Pet.HealthStatus.HEALTHY),
         };
 
         Arrays.sort(dogs, new Comparator<Dog>(){
@@ -44,7 +43,12 @@ public class Sandbox {
             System.out.println(dog.getName());
         }
 
-        Arrays.sort(dogs, new DogAgeComparator());
+        Arrays.sort(dogs, new Comparator<Dog>() {
+            @Override
+            public int compare(Dog dog1, Dog dog2) {
+                return dog2.getBirthDate().compareTo(dog1.getBirthDate());
+            }
+        });
         System.out.println("\n\nSorted by age:");
         for (Dog dog : dogs){
             System.out.println(dog.getAge());
@@ -62,7 +66,7 @@ public class Sandbox {
             System.out.println(dog.getHealthState());
         }
 
-        System.out.println(new Dog("Hugo","male","5 years", Dog.Size.M, Pet.HealthStatus.HEALTHY));
+        System.out.println(new Dog("Hugo","male","10.05.2019", Dog.Size.M, Pet.HealthStatus.HEALTHY));
         System.out.println(new Cat());
     }
 }
