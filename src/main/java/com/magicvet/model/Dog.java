@@ -6,19 +6,17 @@ public class Dog extends Pet{
 
     private Size size;
 
-    public Dog() {}
+    public Dog() {
+        setType("dog");
+    }
 
     public Dog(Size size) {
         this.size = size;
     }
 
-    public Dog(String name, String sex, String age, Size size, HealthStatus healthState){
-        setType("dog");
-        setName(name);
-        setSex(sex);
-        setAge(age);
-        setSize(size);
-        setHealthState(healthState);
+    public Dog(String name, String sex, String birthDateString, Size size, HealthStatus healthState){
+        super("dog", name, sex, birthDateString, healthState);
+        this.size = size;
     }
 
     public String toString(){

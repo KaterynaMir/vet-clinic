@@ -1,5 +1,7 @@
 package main.java.com.magicvet.model;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.time.LocalDateTime;
@@ -7,14 +9,26 @@ import java.time.LocalDateTime;
 public abstract class Pet {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+    public static final DateTimeFormatter FORMATTER_BIRTH_DATE = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     private String type;
     private String sex;
+    private LocalDate birthDate;
     private String age;
     private String name;
     private String ownerName;
     private HealthStatus healthState;
     private final LocalDateTime registrationDate = LocalDateTime.now();
+
+
+    public  Pet(){}
+    public Pet(String type, String name, String sex, String birthDateString, HealthStatus healthState){
+        this.type = type;
+        this.name = name;
+        this.sex = sex;
+        setBirthDate(LocalDate.parse(birthDateString,FORMATTER_BIRTH_DATE));
+        this.healthState = healthState;
+    }
 
     @Override
     public String toString(){
@@ -36,7 +50,7 @@ public abstract class Pet {
         Pet pet = (Pet) o;
         return Objects.equals(type, pet.type)
                 && Objects.equals(sex, pet.sex)
-                && Objects.equals(age, pet.age)
+                && Objects.equals(birthDate, pet.birthDate)
                 && Objects.equals(name, pet.name)
                 && Objects.equals(ownerName, pet.ownerName)
                 && Objects.equals(healthState, pet.healthState);
@@ -44,7 +58,7 @@ public abstract class Pet {
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, sex, age, name, ownerName, healthState);
+        return Objects.hash(type, sex, birthDate, name, ownerName, healthState);
     }
 
     public String getType() {
@@ -63,12 +77,15 @@ public abstract class Pet {
         this.sex = ((sex.equals("m") || sex.equals("male")) ? "male" : "female");
     }
 
+    public LocalDate getBirthDate() { return birthDate; }
+
+    public void setBirthDate (LocalDate birthDate) {
+        this.birthDate = birthDate;
+        Period agePeriod = Period.between(birthDate,LocalDate.now());
+        age = String.format("%d year(s) %d month(s)",agePeriod.getYears(),agePeriod.getMonths());
+    }
     public String getAge() {
         return age;
-    }
-
-    public void setAge(String age) {
-        this.age = age;
     }
 
     public String getName() {
