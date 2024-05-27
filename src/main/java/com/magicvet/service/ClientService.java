@@ -20,19 +20,28 @@ public class ClientService {
         return client;
     }
 
-    public void addPet(Client client, PetService petService) {
-        System.out.print("Do you want to add a new pet now? (y/n): ");
-        String answerAddPet = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),"(y|n)",
-                "y for 'yes' or n for 'no'", InputValidator.Register.LOWER);
-        if (answerAddPet.equals("y")) {
-                System.out.println("Adding a new pet.");
-                Pet pet = petService.registerNewPet();
-                client.setPet(pet);
-                pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
-                System.out.println("Pet has been added.");
-            } else {
-                System.out.println("You can register your pet later. Have a nice day!");
+    public void registerPets(Client client,PetService petService) {
+        boolean continueAddPets = true;
+
+        while (continueAddPets) {
+            addPet(client,petService);
+
+            System.out.println("Do you want to add more pets for the current client? (y/n): ");
+            String answerAddPet = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),"(y|n)",
+                    "y for 'yes' or n for 'no'", InputValidator.Register.LOWER);
+
+            if ("n".equals(answerAddPet)) {
+                continueAddPets = false;
             }
+        }
+    }
+
+    public void addPet(Client client, PetService petService) {
+        System.out.println("Adding a new pet.");
+        Pet pet = petService.registerNewPet();
+        client.addPet(pet);
+        pet.setOwnerName(client.getFirstName() + " " + client.getLastName());
+        System.out.println("Pet has been added.");
         }
 
     private static Client buildClient() {

@@ -32,14 +32,14 @@ public class PetService {
     private Pet buildPet(String type) {
         Pet pet = type.equals(CAT_TYPE) ? new Cat() : new Dog();
 
-        System.out.print("Birth date in format dd/MM/yyyy:  ");
+        System.out.print("Birth date in format dd.MM.yyyy:  ");
         String birthDateString = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),BIRTH_DATE_PATTERN,
-                "dd/MM/yyyy", InputValidator.Register.IGNORE);
+                "dd.MM.yyyy", InputValidator.Register.IGNORE);
         LocalDate birthDate = LocalDate.parse(birthDateString,FORMATTER_BIRTH_DATE);
         while (birthDate.isAfter(LocalDate.now())) {
             System.out.print("You entered future date! Please, enter correct birth date for your pet: ");
             birthDateString = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),BIRTH_DATE_PATTERN,
-                    "dd/MM/yyyy (dd = 01-31, MM = 01-12)", InputValidator.Register.IGNORE);
+                    "dd.MM.yyyy (dd = 01-31, MM = 01-12)", InputValidator.Register.IGNORE);
             birthDate = LocalDate.parse(birthDateString,FORMATTER_BIRTH_DATE);
         }
         pet.setBirthDate(birthDate);

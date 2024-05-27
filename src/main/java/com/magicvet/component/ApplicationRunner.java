@@ -12,7 +12,7 @@ public class ApplicationRunner {
           Client client = clientService.registerNewClient();
 
           if (client != null) {
-              clientService.addPet(client, petService);
+              clientService.registerPets(client,petService);
               System.out.println(client);
           }
         }
