@@ -10,11 +10,8 @@ public class ApplicationRunner {
     public void run() {
         if (Authenticator.auth()) {
           Client client = clientService.registerNewClient();
-
-          if (client != null) {
-              clientService.registerPets(client,petService);
-              System.out.println(client);
-          }
+          clientService.registerPets(client,petService);
+          System.out.println(client);
         }
     }
 }

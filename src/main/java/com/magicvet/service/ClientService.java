@@ -10,10 +10,8 @@ public class ClientService {
     private static final String NAME_PATTERN = "^[a-zA-Z-]{3,}$";
 
     public Client registerNewClient(){
-        Client client = null;
-
         System.out.println("Please provide clients details.");
-        client = buildClient();
+        Client client = buildClient();
         System.out.println("New client: " + client.getFirstName() + " "
                     + client.getLastName() + " (" + client.getEmail() +
                     ") registered on " + client.getClientRegistrationDate());
