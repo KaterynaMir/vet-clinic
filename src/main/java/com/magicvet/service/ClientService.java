@@ -1,6 +1,5 @@
 package main.java.com.magicvet.service;
 
-import main.java.com.magicvet.Main;
 import main.java.com.magicvet.model.Client;
 import main.java.com.magicvet.model.Pet;
 
@@ -14,7 +13,7 @@ public class ClientService {
         Client client = buildClient();
         System.out.println("New client: " + client.getFirstName() + " "
                     + client.getLastName() + " (" + client.getEmail() +
-                    ") registered on " + client.getClientRegistrationDate());
+                    ") registered on " + client.getClientRegistrationDate().format(Client.FORMATTER_CLIENT_DATE));
         return client;
     }
 
@@ -25,7 +24,7 @@ public class ClientService {
             addPet(client,petService);
 
             System.out.println("Do you want to add more pets for the current client? (y/n): ");
-            String answerAddPet = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(),"(y|n)",
+            String answerAddPet = InputValidator.validateInputForPattern("(y|n)",
                     "y for 'yes' or n for 'no'", InputValidator.Register.LOWER);
 
             if ("n".equals(answerAddPet)) {
@@ -45,14 +44,13 @@ public class ClientService {
     private static Client buildClient() {
         Client client = new Client();
         System.out.print("Email: ");
-        client.setEmail(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), EMAIL_PATTERN,
-                "example@email.com", InputValidator.Register.IGNORE));
+        client.setEmail(InputValidator.validateInputForPattern(EMAIL_PATTERN, "example@email.com"));
         System.out.print("First name: ");
-        client.setFirstName(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), NAME_PATTERN,
-                "at least 3 latin letters and/or hyphen", InputValidator.Register.IGNORE));
+        client.setFirstName(InputValidator.validateInputForPattern(NAME_PATTERN,
+                "at least 3 latin letters and/or hyphen"));
         System.out.print("Last name: ");
-        client.setLastName(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), NAME_PATTERN,
-                "at least 3 latin letters and/or hyphen", InputValidator.Register.IGNORE));
+        client.setLastName(InputValidator.validateInputForPattern(NAME_PATTERN,
+                "at least 3 latin letters and/or hyphen"));
         return client;
     }
 }

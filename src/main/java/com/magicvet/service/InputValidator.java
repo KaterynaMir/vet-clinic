@@ -20,6 +20,14 @@ public class InputValidator {
         return input;
     }
 
+    public static String validateInputForPattern(String patternString, String validInput) {
+        return validateInputForPattern(Main.SCANNER.nextLine(), patternString, validInput, Register.IGNORE);
+    }
+
+    public static String validateInputForPattern(String patternString, String validInput, Register register) {
+        return validateInputForPattern(Main.SCANNER.nextLine(), patternString, validInput, register);
+    }
+
     public enum Register {
         LOWER, UPPER, IGNORE
     }

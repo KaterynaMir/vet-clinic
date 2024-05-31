@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Client {
 
-    private static final DateTimeFormatter FORMATTER_CLIENT_DATE = DateTimeFormatter.ofPattern("yyyy/MMM/dd HH:mm");
+    public static final DateTimeFormatter FORMATTER_CLIENT_DATE = DateTimeFormatter.ofPattern("yyyy/MMM/dd HH:mm");
     private String firstName;
     private String lastName;
     private String email;
@@ -71,11 +71,11 @@ public class Client {
         return email;
     }
 
-    public List<Pet> getPet() {
+    public List<Pet> getPets() {
         return pets;
     }
 
-    public void setPet(List<Pet> pets) {
+    public void setPets(List<Pet> pets) {
         this.pets = pets;
     }
 
@@ -84,7 +84,7 @@ public class Client {
     }
 
 
-    public String getClientRegistrationDate() {
-        return clientRegistrationDate.format(FORMATTER_CLIENT_DATE);
+    public LocalDateTime getClientRegistrationDate() {
+        return clientRegistrationDate;
     }
 }

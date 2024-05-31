@@ -1,6 +1,5 @@
 package main.java.com.magicvet.service;
 
-import main.java.com.magicvet.Main;
 import main.java.com.magicvet.model.Cat;
 import main.java.com.magicvet.model.Dog;
 import main.java.com.magicvet.model.Pet;
@@ -24,7 +23,7 @@ public class PetService {
     public Pet registerNewPet() {
         System.out.print("Type (dog / cat): ");
 
-        String type = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), "(dog|cat)",
+        String type = InputValidator.validateInputForPattern("(dog|cat)",
                 "dog or cat", InputValidator.Register.LOWER);
         return buildPet(type);
     }
@@ -33,35 +32,46 @@ public class PetService {
         Pet pet = type.equals(CAT_TYPE) ? new Cat() : new Dog();
 
         System.out.print("Birth date in format dd.MM.yyyy:  ");
-        String birthDateString = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), BIRTH_DATE_PATTERN,
-                "dd.MM.yyyy", InputValidator.Register.IGNORE);
-        LocalDate birthDate = LocalDate.parse(birthDateString, FORMATTER_BIRTH_DATE);
-        while (birthDate.isAfter(LocalDate.now())) {
-            System.out.print("You entered future date! Please, enter correct birth date for your pet: ");
-            birthDateString = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), BIRTH_DATE_PATTERN,
-                    "dd.MM.yyyy (dd = 01-31, MM = 01-12)", InputValidator.Register.IGNORE);
-            birthDate = LocalDate.parse(birthDateString, FORMATTER_BIRTH_DATE);
-        }
-        pet.setBirthDate(birthDate);
+        pet.setBirthDate(validateAndParseDate());
 
         System.out.print("Name: ");
-        pet.setName(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), PET_NAME_PATTERN,
-                "at least one non whitespace character", InputValidator.Register.IGNORE));
+        pet.setName(InputValidator.validateInputForPattern(PET_NAME_PATTERN,
+                "at least one non whitespace character"));
 
         System.out.print("Sex (male / female): ");
-        pet.setSex(InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), SEX_PATTERN,
+        pet.setSex(InputValidator.validateInputForPattern(SEX_PATTERN,
                 "male or m / female or f", InputValidator.Register.LOWER));
 
         if (type.equals(DOG_TYPE)) {
             System.out.print("Size (XS / S / M / L / XL): ");
-            String size = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), SIZE_PATTERN,
+            String size = InputValidator.validateInputForPattern(SIZE_PATTERN,
                     "XS / S / M / L / XL", InputValidator.Register.UPPER);
             ((Dog) pet).setSize(Dog.Size.valueOf(size.toUpperCase()));
         }
 
         System.out.print("What is your view of your pet's health status " +
                 "(CRITICAL(C) / SERIOUS(S) / MODERATE(M) / HEALTHY(H)): ");
-        String healthStatus = InputValidator.validateInputForPattern(Main.SCANNER.nextLine(), HEALTH_PATTERN,
+        parseAndSetHealthStatus(pet);
+
+        return pet;
+    }
+
+
+    private LocalDate validateAndParseDate() {
+        String birthDateString = InputValidator.validateInputForPattern(BIRTH_DATE_PATTERN, "dd.MM.yyyy");
+        LocalDate birthDate = LocalDate.parse(birthDateString, FORMATTER_BIRTH_DATE);
+        while (birthDate.isAfter(LocalDate.now())) {
+            System.out.print("You entered future date! Please, enter correct birth date for your pet: ");
+            birthDateString = InputValidator.validateInputForPattern(BIRTH_DATE_PATTERN,
+                    "dd.MM.yyyy (dd = 01-31, MM = 01-12)");
+            birthDate = LocalDate.parse(birthDateString, FORMATTER_BIRTH_DATE);
+        }
+        return birthDate;
+    }
+
+
+    private void parseAndSetHealthStatus(Pet pet) {
+        String healthStatus = InputValidator.validateInputForPattern(HEALTH_PATTERN,
                 "CRITICAL or C / SERIOUS or S / MODERATE or M / HEALTHY or H", InputValidator.Register.UPPER);
         switch (healthStatus.toUpperCase()) {
             case "CRITICAL", "C" -> pet.setHealthState(Pet.HealthStatus.CRITICAL);
@@ -69,9 +79,7 @@ public class PetService {
             case "MODERATE", "M" -> pet.setHealthState(Pet.HealthStatus.MODERATE);
             case "HEALTHY", "H" -> pet.setHealthState(Pet.HealthStatus.HEALTHY);
         }
-        return pet;
     }
-
 
     public void sortPets(List<Pet> pets, String sortField, boolean printPets) {
         String field = sortField.trim().toLowerCase();

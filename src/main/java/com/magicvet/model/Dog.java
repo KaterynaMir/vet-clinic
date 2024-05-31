@@ -10,10 +10,6 @@ public class Dog extends Pet{
         setType(PetType.DOG);
     }
 
-    public Dog(Size size) {
-        this.size = size;
-    }
-
     public Dog(String name, Sex sex, String birthDateString, Size size, HealthStatus healthState){
         super(PetType.DOG, name, sex, birthDateString, healthState);
         this.size = size;
@@ -28,7 +24,7 @@ public class Dog extends Pet{
                 + ", size = " + size
                 + ", healthState = " + getHealthState()
                 + ", ownerName = " + getOwnerName()
-                + ", registrationDate = " + getRegistrationDate()
+                + ", registrationDate = " + getRegistrationDate().format(FORMATTER)
                 + "}";
     }
 
