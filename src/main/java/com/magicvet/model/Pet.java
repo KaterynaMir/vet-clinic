@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 
 public abstract class Pet {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
     public static final DateTimeFormatter FORMATTER_BIRTH_DATE = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
-    private String type;
-    private String sex;
+    private PetType type;
+    private Sex sex;
     private LocalDate birthDate;
     private String age;
     private String name;
@@ -22,7 +22,7 @@ public abstract class Pet {
 
 
     public  Pet(){}
-    public Pet(String type, String name, String sex, String birthDateString, HealthStatus healthState){
+    public Pet(PetType type, String name, Sex sex, String birthDateString, HealthStatus healthState){
         this.type = type;
         this.name = name;
         this.sex = sex;
@@ -52,29 +52,28 @@ public abstract class Pet {
                 && Objects.equals(sex, pet.sex)
                 && Objects.equals(birthDate, pet.birthDate)
                 && Objects.equals(name, pet.name)
-                && Objects.equals(ownerName, pet.ownerName)
-                && Objects.equals(healthState, pet.healthState);
+                && Objects.equals(ownerName, pet.ownerName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, sex, birthDate, name, ownerName, healthState);
+        return Objects.hash(type, sex, birthDate, name, ownerName);
     }
 
-    public String getType() {
+    public PetType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(PetType type) {
         this.type = type;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
     }
 
     public void setSex(String sex) {
-        this.sex = ((sex.equals("m") || sex.equals("male")) ? "male" : "female");
+        this.sex = (sex.equals("m") || sex.equals("male")) ? Sex.MALE : Sex.FEMALE;
     }
 
     public LocalDate getBirthDate() { return birthDate; }
@@ -108,11 +107,31 @@ public abstract class Pet {
 
     public void setHealthState(HealthStatus healthState) { this.healthState = healthState; }
 
-    public String getRegistrationDate() {
-        return registrationDate.format(FORMATTER);
+    public LocalDateTime getRegistrationDate() {
+        return registrationDate;
     }
 
-    public enum HealthStatus{
+    public enum PetType {
+        CAT,
+        DOG
+    }
+
+    public enum Sex {
+        MALE("m"),
+        FEMALE("f");
+
+        private final String shortForm;
+
+        Sex(String shortForm) {
+            this.shortForm = shortForm;
+        }
+
+        public String getShortForm() {
+            return shortForm;
+        }
+    }
+
+    public enum HealthStatus {
         HEALTHY (4), // the pet is healthy and ready for vaccination/sterilization
         MODERATE (3), // there are some health issues which could be treated at home
                                  // with ambulatory visits to the clinic
