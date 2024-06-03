@@ -14,6 +14,7 @@ public class Client {
     private String email;
     private List<Pet> pets = new ArrayList<>();
     private final LocalDateTime clientRegistrationDate = LocalDateTime.now();
+    private Location location;
 
     @Override
     public String toString() {
@@ -26,6 +27,7 @@ public class Client {
                 + "\n\tfirstName = " + firstName
                 + ", lastName = " + lastName
                 + ", email = " + email
+                + ", location = " + location
                 + ", clientRegistrationDate = " + clientRegistrationDate.format(FORMATTER_CLIENT_DATE)
                 + ",\n\tpets = " + petsString
                 + "\n}";
@@ -83,8 +85,19 @@ public class Client {
         pets.add(pet);
     }
 
-
     public LocalDateTime getClientRegistrationDate() {
         return clientRegistrationDate;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public enum Location {
+        VINNYTSIA, KHARKIV, KYIV, LVIV, ODESA
     }
 }
