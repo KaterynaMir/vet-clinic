@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 public abstract class Pet {
 
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+    static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
     public static final DateTimeFormatter FORMATTER_BIRTH_DATE = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     private PetType type;
@@ -136,7 +136,8 @@ public abstract class Pet {
         MODERATE (3), // there are some health issues which could be treated at home
                                  // with ambulatory visits to the clinic
         SERIOUS (2),  // the hospitalization is needed
-        CRITICAL (1); // reanimation procedures are needed
+        CRITICAL (1), // reanimation procedures are needed
+        UNKNOWN (0); // illegal input
 
         private final int healthValue;
 
@@ -146,6 +147,20 @@ public abstract class Pet {
 
         public int getHealthValue() {
             return healthValue;
+        }
+
+        public static HealthStatus fromString(String healthStatus) {
+            switch (healthStatus.toUpperCase()) {
+                case "CRITICAL", "C" -> {return CRITICAL;}
+                case "SERIOUS", "S" -> {return SERIOUS;}
+                case "MODERATE", "M" -> {return MODERATE;}
+                case "HEALTHY", "H" -> {return HEALTHY;}
+                default -> {
+                    System.out.println("Unable to parse input '" + healthStatus +
+                            "'. Using default value: " + UNKNOWN);
+                    return UNKNOWN;}
+            }
+
         }
     }
 

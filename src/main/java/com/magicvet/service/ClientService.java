@@ -1,11 +1,11 @@
 package main.java.com.magicvet.service;
 
+import main.java.com.magicvet.Main;
 import main.java.com.magicvet.model.Client;
 
 public class ClientService {
     private static final String EMAIL_PATTERN = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     private static final String NAME_PATTERN = "^[a-zA-Z-]{3,}$";
-    private static final String LOCATION_PATTERN = "^(VINNYTSIA|KHARKIV|KYIV|LVIV|ODESA)$";
 
     public Client registerNewClient(){
         System.out.println("Please provide clients details.");
@@ -32,9 +32,8 @@ public class ClientService {
                 "at least 3 latin letters and/or hyphen"));
 
         System.out.print("Location: ");
-        String location = InputValidator.validateInputForPattern(LOCATION_PATTERN,
-                "VINNYTSIA / KHARKIV / KYIV / LVIV / ODESA", InputValidator.Register.UPPER);
-        client.setLocation(Client.Location.valueOf(location));
+        String location = Main.SCANNER.nextLine().trim();
+        client.setLocation(Client.Location.fromString(location));
 
         return client;
     }

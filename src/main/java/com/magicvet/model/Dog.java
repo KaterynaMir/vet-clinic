@@ -51,6 +51,7 @@ public class Dog extends Pet{
     }
 
     public enum Size {
+        UNKNOWN(0),
         XS(1),
         S(2),
         M(3),
@@ -65,6 +66,16 @@ public class Dog extends Pet{
 
         public int getValue() {
             return value;
+        }
+
+        public static Size fromString(String input) {
+            for (Size size : values()) {
+                if (size.toString().equals(input.toUpperCase()))  {
+                    return size;
+                }
+            }
+            System.out.println("Unable to parse input '" + input + "'. Using default value: " + UNKNOWN);
+            return UNKNOWN;
         }
     }
 }
