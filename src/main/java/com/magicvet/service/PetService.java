@@ -37,7 +37,7 @@ public class PetService {
         pet.setName(InputValidator.validateInputForPattern(PET_NAME_PATTERN,
                 "at least one non whitespace character"));
 
-        System.out.print("Sex (male / female): ");
+        System.out.print("Sex (male(m) / female(f)): ");
         pet.setSex(InputValidator.validateInputForPattern(SEX_PATTERN,
                 "male or m / female or f", InputValidator.Register.LOWER));
 

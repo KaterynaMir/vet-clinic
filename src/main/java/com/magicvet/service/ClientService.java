@@ -31,7 +31,7 @@ public class ClientService {
         client.setLastName(InputValidator.validateInputForPattern(NAME_PATTERN,
                 "at least 3 latin letters and/or hyphen"));
 
-        System.out.print("Location: ");
+        System.out.print("Location ( VINNYTSIA(v) / KHARKIV(kh) / KYIV(k) / LVIV(l) / ODESA(o) ): ");
         String location = Main.SCANNER.nextLine().trim();
         client.setLocation(Client.Location.fromString(location));
 
