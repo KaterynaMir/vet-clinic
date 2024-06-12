@@ -16,7 +16,7 @@ public class Authenticator {
                 accepted = true;
                 break;
             } else {
-                System.out.println("Access denied. Please check your password.");
+                System.out.println("Access denied. Please check your password. Attempts left: " + (2 - i));
             }
         }
 

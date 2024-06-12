@@ -1,5 +1,6 @@
 package main.java.com.magicvet.service;
 
+import main.java.com.magicvet.Main;
 import main.java.com.magicvet.model.Cat;
 import main.java.com.magicvet.model.Dog;
 import main.java.com.magicvet.model.Pet;
@@ -17,8 +18,6 @@ public class PetService {
     private static final String BIRTH_DATE_PATTERN = "^(0[1-9]|1[0-9]|2[0-9]|3[0-1])\\.(0[1-9]|1[0-2])\\.(\\d){4}$";
     private static final String PET_NAME_PATTERN = "[\\s\\S]*\\S[\\s\\S]*";
     private static final String SEX_PATTERN = "^(male|female|m|f)$";
-    private static final String SIZE_PATTERN = "^(XS|S|M|L|XL)$";
-    private static final String HEALTH_PATTERN = "^(CRITICAL|SERIOUS|MODERATE|HEALTHY|C|S|M|H)$";
 
     public Pet registerNewPet() {
         System.out.print("Type (dog / cat): ");
@@ -38,20 +37,19 @@ public class PetService {
         pet.setName(InputValidator.validateInputForPattern(PET_NAME_PATTERN,
                 "at least one non whitespace character"));
 
-        System.out.print("Sex (male / female): ");
+        System.out.print("Sex (male(m) / female(f)): ");
         pet.setSex(InputValidator.validateInputForPattern(SEX_PATTERN,
                 "male or m / female or f", InputValidator.Register.LOWER));
 
         if (type.equals(DOG_TYPE)) {
             System.out.print("Size (XS / S / M / L / XL): ");
-            String size = InputValidator.validateInputForPattern(SIZE_PATTERN,
-                    "XS / S / M / L / XL", InputValidator.Register.UPPER);
-            ((Dog) pet).setSize(Dog.Size.valueOf(size.toUpperCase()));
+            ((Dog) pet).setSize(Dog.Size.fromString(Main.SCANNER.nextLine().trim()));
         }
 
         System.out.print("What is your view of your pet's health status " +
                 "(CRITICAL(C) / SERIOUS(S) / MODERATE(M) / HEALTHY(H)): ");
-        parseAndSetHealthStatus(pet);
+        Pet.HealthStatus healthStatus = Pet.HealthStatus.fromString(Main.SCANNER.nextLine().trim());
+        pet.setHealthState(healthStatus);
 
         return pet;
     }
@@ -67,18 +65,6 @@ public class PetService {
             birthDate = LocalDate.parse(birthDateString, FORMATTER_BIRTH_DATE);
         }
         return birthDate;
-    }
-
-
-    private void parseAndSetHealthStatus(Pet pet) {
-        String healthStatus = InputValidator.validateInputForPattern(HEALTH_PATTERN,
-                "CRITICAL or C / SERIOUS or S / MODERATE or M / HEALTHY or H", InputValidator.Register.UPPER);
-        switch (healthStatus.toUpperCase()) {
-            case "CRITICAL", "C" -> pet.setHealthState(Pet.HealthStatus.CRITICAL);
-            case "SERIOUS", "S" -> pet.setHealthState(Pet.HealthStatus.SERIOUS);
-            case "MODERATE", "M" -> pet.setHealthState(Pet.HealthStatus.MODERATE);
-            case "HEALTHY", "H" -> pet.setHealthState(Pet.HealthStatus.HEALTHY);
-        }
     }
 
     public void sortPets(List<Pet> pets, String sortField, boolean printPets) {

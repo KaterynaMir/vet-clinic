@@ -98,6 +98,32 @@ public class Client {
     }
 
     public enum Location {
-        VINNYTSIA, KHARKIV, KYIV, LVIV, ODESA
+        VINNYTSIA("v"),
+        KHARKIV("kh"),
+        KYIV("k"),
+        LVIV("l"),
+        ODESA("o"),
+        UNKNOWN("unk");
+
+        private final String shortForm;
+
+        Location(String shortForm) {
+            this.shortForm = shortForm;
+        }
+
+        public String getShortForm() {
+            return shortForm;
+        }
+
+        public static Location fromString(String input) {
+            for (Location location : values()) {
+                if (location.toString().equals(input.toUpperCase()) ||
+                        location.getShortForm().equals(input.toLowerCase())) {
+                    return location;
+                }
+            }
+            System.out.println("Unable to parse input '" + input + "'. Using default value: " + UNKNOWN);
+            return UNKNOWN;
+        }
     }
 }
