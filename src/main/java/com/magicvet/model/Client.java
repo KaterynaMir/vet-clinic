@@ -19,10 +19,8 @@ public class Client {
     @Override
     public String toString() {
         StringBuilder petsString= new StringBuilder();
-        for (Pet pet : pets) {
-            petsString.append("\n\t")
-                      .append(pet);
-        }
+        pets.forEach(p -> petsString.append("\n\t").append(p));
+
         return "Client {"
                 + "\n\tfirstName = " + firstName
                 + ", lastName = " + lastName
