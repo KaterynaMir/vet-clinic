@@ -28,12 +28,9 @@ public class EntityRegister {
     }
 
     private void printClients(Map<Client.Location, List<Client>> clientsByLocation) {
-        for(Map.Entry<Client.Location, List<Client>> clients : clientsByLocation.entrySet()) {
-            String content = "\nLocation: " + clients.getKey()
-                    + "\nClients (" + clients.getValue().size() + "):"
-                    + "\n\t" + clients.getValue();
-            System.out.println(content);
-        }
+        clientsByLocation.forEach((key, value) -> System.out.println("\nLocation: " + key
+                + "\nClients (" + value.size() + "):"
+                + "\n\t" + value));
     }
 
     private Map<Client.Location, List<Client>> groupClients(List<Client> clients) {
