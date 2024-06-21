@@ -5,7 +5,9 @@ import main.java.com.magicvet.Main;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class InputValidator {
+public final class InputValidator {
+    private InputValidator() {}
+
     public static String validateInputForPattern(String userInput, String patternString, String validInput, Register register) {
         String input = checkRegister(userInput, register);
         Pattern pattern = Pattern.compile(patternString);

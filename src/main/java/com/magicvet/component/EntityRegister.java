@@ -7,9 +7,9 @@ import main.java.com.magicvet.service.InputValidator;
 import main.java.com.magicvet.service.PetService;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class EntityRegister {
 
@@ -23,7 +23,8 @@ public class EntityRegister {
             clients.add(addClient());
         } while (verifyRepeating(message));
 
-        Map<Client.Location, List<Client>> clientsByLocation = groupClients(clients);
+        Map<Client.Location, List<Client>> clientsByLocation = clients.stream()
+                .collect(Collectors.groupingBy(Client::getLocation));
         printClients(clientsByLocation);
     }
 
@@ -31,36 +32,6 @@ public class EntityRegister {
         clientsByLocation.forEach((key, value) -> System.out.println("\nLocation: " + key
                 + "\nClients (" + value.size() + "):"
                 + "\n\t" + value));
-    }
-
-    private Map<Client.Location, List<Client>> groupClients(List<Client> clients) {
-        List<Client> fromVinnytsia = new ArrayList<>();
-        List<Client> fromKharkiv = new ArrayList<>();
-        List<Client> fromKyiv = new ArrayList<>();
-        List<Client> fromLviv = new ArrayList<>();
-        List<Client> fromOdesa = new ArrayList<>();
-        List<Client> unknownLocation = new ArrayList<>();
-
-        for (Client client : clients) {
-            switch (client.getLocation()) {
-                case VINNYTSIA -> fromVinnytsia.add(client);
-                case KHARKIV -> fromKharkiv.add(client);
-                case KYIV -> fromKyiv.add(client);
-                case LVIV -> fromLviv.add(client);
-                case ODESA -> fromOdesa.add(client);
-                case UNKNOWN -> unknownLocation.add(client);
-            }
-        }
-
-        Map<Client.Location, List<Client>> clientsByLocation = new HashMap<>();
-        clientsByLocation.put(Client.Location.VINNYTSIA, fromVinnytsia);
-        clientsByLocation.put(Client.Location.KHARKIV, fromKharkiv);
-        clientsByLocation.put(Client.Location.KYIV, fromKyiv);
-        clientsByLocation.put(Client.Location.LVIV, fromLviv);
-        clientsByLocation.put(Client.Location.ODESA, fromOdesa);
-        clientsByLocation.put(Client.Location.UNKNOWN, unknownLocation);
-
-        return clientsByLocation;
     }
 
     private Client addClient() {

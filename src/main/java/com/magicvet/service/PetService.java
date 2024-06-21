@@ -56,7 +56,8 @@ public class PetService {
 
 
     private LocalDate validateAndParseDate() {
-        String birthDateString = InputValidator.validateInputForPattern(BIRTH_DATE_PATTERN, "dd.MM.yyyy");
+        String birthDateString = InputValidator.validateInputForPattern(BIRTH_DATE_PATTERN,
+                "dd.MM.yyyy (dd = 01-31, MM = 01-12)");
         LocalDate birthDate = LocalDate.parse(birthDateString, FORMATTER_BIRTH_DATE);
         while (birthDate.isAfter(LocalDate.now())) {
             System.out.print("You entered future date! Please, enter correct birth date for your pet: ");
